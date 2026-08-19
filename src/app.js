@@ -1,25 +1,14 @@
 const express = require("express");
+const connectDB = require("./config/database");
 const app = express();
 
-app.get("/getUserData", (req, res) => {
-  // Logic of DB call and fetching user data
-  // what if there is some error in DB call
-  // try {
-  throw new Error("Database connection failed");
-  res.send("User data fetched successfully");
-  // } catch (error) {
-  //   {
-  //     res.status(500).send("Something wrong. Contact admin");
-  //   }
-  // }
-});
-
-app.use("/", (err, req, res, next) => {
-  if (err) {
-    res.status(500).send("Something went wrong");
-  }
-});
-
-app.listen(7777, () => {
-  console.log("Server is running on port 7777");
-});
+connectDB()
+  .then(() => {
+    console.log("Database connected successfully");
+    app.listen(7777, () => {
+      console.log("Server is running on port 7777");
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed:", err);
+  });
