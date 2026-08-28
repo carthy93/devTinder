@@ -5,8 +5,8 @@ const validateSignupData = (req) => {
 
   if (!firstName || !lastName) {
     throw new Error("Name is not valid");
-  } else if (firstName.length < 4 && lastName > 50) {
-    throw new Error("Name should be min 4 and max 50");
+  } else if (firstName.length < 3 || firstName.length > 50) {
+    throw new Error("Name should be min 3 and max 50");
   } else if (!validator.isEmail(emailId)) {
     throw new Error("Email is not valid");
   } else if (!validator.isStrongPassword(password)) {
@@ -14,6 +14,26 @@ const validateSignupData = (req) => {
   }
 };
 
+const validateEditProfileData = (req) => {
+  const allowedEditFields = [
+    "firstName",
+    "lastName",
+    "emailId",
+    "age",
+    "gender",
+    "photoUrl",
+    "about",
+    "skills",
+  ];
+
+  const isEditAllowed = Object.keys(req.body).every((field) =>
+    allowedEditFields.includes(field),
+  );
+
+  return isEditAllowed;
+};
+
 module.exports = {
   validateSignupData,
+  validateEditProfileData,
 };
