@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const dbUrl =
-  "mongodb+srv://caarthik180_db_user:jz4zfgThrMuHmRPv@namastenode.nouqehy.mongodb.net/devTinder";
+const dbUrl = process.env.DB_CONNECTION_SECRET_KEY;
 
 const connectDB = async () => {
   await mongoose.connect(dbUrl);
